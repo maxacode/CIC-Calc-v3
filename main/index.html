@@ -19,35 +19,63 @@
       --bad:#ff5b6e;
       --radius:12px;
     }
+    body.light {
+      --bg: #fbfbfd;
+      --bg-soft: #f5f5f7;
+      --card: #ffffff;
+      --line: #e5e5e7;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      background: #fbfbfd;
+    }
+    body.light .head { background: #ffffff; border: 2px solid var(--line); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    body.light .tab { background: #f5f5f7; border: 2px solid var(--line); color: var(--text); }
+    body.light .tab.active { background: var(--red); color: #fff; border-color: var(--red); }
+    body.light .card { background: #ffffff; border: 2px solid var(--line); box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    body.light .card h3 { color: #1d1d1f; }
+    body.light input { background: #fbfbfd; border: 2px solid var(--line); color: var(--text); }
+    body.light .kpi-box { background: #f5f5f7; border-color: #e5e5e7; }
+    body.light .kpi { color: #1d1d1f; }
+    body.light .donut::after { background: #ffffff; border: 2px solid var(--line); }
+    body.light canvas { background: #ffffff !important; border: 2px solid var(--line) !important; }
+    body.light th { color: #6e6e73; border-bottom-color: #e5e5e7; }
+    body.light td { border-bottom-color: #f5f5f7; color: #1d1d1f; }
+    body.light .mini { color: #48484a; }
+    body.light .gain { color: #1d1d1f; }
+    body.light .status-pill.q { background: rgba(32,201,151,0.12); color: #007a5a; border-color: rgba(32,201,151,0.3); }
+    body.light .status-pill.u { background: rgba(217,35,46,0.08); color: #b01c26; border-color: rgba(217,35,46,0.2); }
+
     *{box-sizing:border-box;font-family:Inter,Segoe UI,Arial,sans-serif}
-    body{margin:0;background:radial-gradient(circle at top right,#1f1f1f 0%,#0a0a0a 45%,#050505 100%);color:var(--text)}
+    body{margin:0;background:radial-gradient(circle at top right,#1f1f1f 0%,#0a0a0a 45%,#050505 100%);color:var(--text);transition: background 0.3s, color 0.3s;}
     .wrap{max-width:1000px;margin:0 auto;padding:10px}
 
-    .head{background:linear-gradient(140deg,#1a1a1a,#0f0f0f);border:1px solid #2a2a2a;border-radius:16px;padding:14px}
+    .head{background:linear-gradient(140deg,#1a1a1a,#0f0f0f);border:2px solid #2a2a2a;border-radius:16px;padding:14px;position:relative}
     .brand{display:flex;align-items:center;justify-content:center;gap:10px}
+    #themeToggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-soft);border: 2px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;}
+    #themeToggle:hover{border-color:var(--red);background:var(--bg)}
     .dot{display:none}
     h1{margin:0;font-size:2rem;letter-spacing:.8px;text-transform:uppercase;text-align:center}
     .sub{display:none}
 
     .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-    .tab{border:1px solid #353535;background:#121212;color:var(--text);padding:10px;border-radius:10px;cursor:pointer;font-weight:600;font-size:.95rem}
+    .tab{border:2px solid #353535;background:#121212;color:var(--text);padding:10px;border-radius:10px;cursor:pointer;font-weight:600;font-size:.95rem}
     .tab.active{background:var(--red);border-color:var(--red);color:var(--white)}
 
     .panel{display:none}
     .panel.active{display:block}
 
     .grid{display:grid;grid-template-columns:1fr;gap:8px}
-    .card{background:linear-gradient(180deg,#171717,#111111);border:1px solid var(--line);border-radius:var(--radius);padding:10px}
+    .card{background:linear-gradient(180deg,#171717,#111111);border: 2px solid var(--line);border-radius:var(--radius);padding:10px}
     .card h3{margin:0 0 8px;font-size:1rem;color:#f2f2f2;letter-spacing:.2px}
 
     .inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
     .wide{grid-column:auto}
     label{display:block;font-size:.88rem;color:var(--muted);margin-bottom:4px}
-    input{width:100%;padding:9px;border-radius:9px;border:1px solid #363636;background:#0e0e0e;color:var(--white);font-size:1rem}
+    input{width:100%;padding:9px;border-radius:9px;border:2px solid #363636;background:#0e0e0e;color:var(--white);font-size:1rem}
     input:focus{outline:none;border-color:var(--red)}
 
     .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .kpi-box{background:#0f0f0f;border:1px solid #2d2d2d;border-radius:10px;padding:9px}
+    .kpi-box{background:#0f0f0f;border:2px solid #2d2d2d;border-radius:10px;padding:9px}
     .kpi{font-size:1.2rem;font-weight:800;line-height:1.2}
     .klabel{font-size:.82rem;color:var(--muted);margin-top:3px}
 
@@ -60,17 +88,17 @@
 
     .donut-wrap{position:relative;display:flex;justify-content:center;align-items:center;min-height:160px}
     .donut{--deg:0deg;width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--red) 0 var(--deg), #393939 var(--deg) 360deg);position:relative}
-    .donut::after{content:"";position:absolute;inset:16px;border-radius:50%;background:#111;border:1px solid #2c2c2c}
+    .donut::after{content:"";position:absolute;inset:16px;border-radius:50%;background:#111;border:2px solid #2c2c2c}
     .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:2;text-align:center;font-size:.9rem;color:var(--muted);pointer-events:none}
     .donut-center b{display:block;color:#fff;font-size:1.1rem;margin-top:2px}
 
     table{width:100%;border-collapse:collapse;font-size:.92rem}
-    th,td{border-bottom:1px solid #2e2e2e;padding:7px 4px;text-align:left}
+    th,td{border-bottom:2px solid #2e2e2e;padding:7px 4px;text-align:left}
     th{color:#fff;font-size:.82rem}
 
     .status-pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.78rem;font-weight:700}
-    .q{background:rgba(32,201,151,.18);color:#9ef1d0;border:1px solid rgba(32,201,151,.35)}
-    .u{background:rgba(255,91,110,.16);color:#ffbbc4;border:1px solid rgba(255,91,110,.35)}
+    .q{background:rgba(32,201,151,.18);color:#9ef1d0;border:2px solid rgba(32,201,151,.35)}
+    .u{background:rgba(255,91,110,.16);color:#ffbbc4;border:2px solid rgba(255,91,110,.35)}
 
     .gain{font-size:1.3rem;font-weight:800;color:#fff}
     .gain.good{color:#9ef1d0}
@@ -113,6 +141,7 @@
 <div class="wrap">
   <div class="head">
     <div class="brand"><h1>CIC CALC</h1></div>
+    <button id="themeToggle">Light Mode</button>
   </div>
 
   <div class="tabs">
@@ -157,7 +186,7 @@
       <div class="card span-6">
         <h3>Chart: Qualified Revenue by Tier</h3>
         <div id="bars" class="chart-wrap"></div>
-        <canvas id="revChart" width="800" height="250" style="width:100%;height:190px;background:#0d0d0d;border:1px solid #2b2b2b;border-radius:10px"></canvas>
+        <canvas id="revChart" width="800" height="250" style="width:100%;height:190px;background:#0d0d0d;border:2px solid #2b2b2b;border-radius:10px"></canvas>
       </div>
 
       <div class="card span-12">
@@ -216,7 +245,7 @@
         <h3>Chart: CIC Value Drivers</h3>
         <div class="mini" style="margin-bottom:6px">How the upside is built: savings + fee income + revenue share.</div>
         <div id="comDrivers" class="chart-wrap"></div>
-        <canvas id="comChart" width="800" height="250" style="width:100%;height:190px;background:#0d0d0d;border:1px solid #2b2b2b;border-radius:10px"></canvas>
+        <canvas id="comChart" width="800" height="250" style="width:100%;height:190px;background:#0d0d0d;border:2px solid #2b2b2b;border-radius:10px"></canvas>
       </div>
     </div>
   </section>
@@ -248,7 +277,8 @@ function drawSimpleBars(canvasId, labels, values, color='#d9232e'){
   const iw=w-p.l-p.r, ih=h-p.t-p.b;
   const max=Math.max(...values,1); const step=iw/values.length; const bw=Math.min(56,step*0.58);
 
-  ctx.strokeStyle='#2e2e2e'; ctx.lineWidth=1;
+  const isLight = document.body.classList.contains('light');
+  ctx.strokeStyle=isLight ? '#d2d2d7' : '#2e2e2e'; ctx.lineWidth=2;
   for(let i=0;i<=4;i++){ const y=p.t+(ih/4)*i; ctx.beginPath(); ctx.moveTo(p.l,y); ctx.lineTo(w-p.r,y); ctx.stroke(); }
 
   values.forEach((v,i)=>{
@@ -260,9 +290,9 @@ function drawSimpleBars(canvasId, labels, values, color='#d9232e'){
     ctx.lineTo(x+bw-r,y); ctx.quadraticCurveTo(x+bw,y,x+bw,y+r);
     ctx.lineTo(x+bw,y+bh); ctx.closePath(); ctx.fill();
 
-    ctx.fillStyle='#f4f4f4'; ctx.font='11px Inter, Arial'; ctx.textAlign='center';
+    ctx.fillStyle=isLight ? '#1d1d1f' : '#f4f4f4'; ctx.font='11px Inter, Arial'; ctx.textAlign='center';
     ctx.fillText('$'+Math.round(v).toLocaleString(), x+bw/2, Math.max(12,y-4));
-    ctx.fillStyle='#cfcfcf'; ctx.fillText(labels[i],x+bw/2,h-16);
+    ctx.fillStyle=isLight ? '#86868b' : '#cfcfcf'; ctx.fillText(labels[i],x+bw/2,h-16);
   });
 }
 
@@ -350,13 +380,14 @@ function comCalc(){
 
   const pairs=[['Total Paid',B13,F13],['Tx Fee Income',B14,F14],['Rev Share',0,F15]];
   const max=Math.max(...pairs.flatMap(x=>[x[1],x[2]]),1);
-  $('comBars').innerHTML=pairs.map(([n,t,c])=>`<div style='padding:6px 8px;border:1px solid #2b2b2b;border-radius:10px;background:#111'>
-    <div class='mini' style='font-weight:700;color:#fff;margin-bottom:4px'>${n}</div>
+  $('comBars').innerHTML=pairs.map(([n,t,c])=>`<div style='padding:6px 8px;border: 2px solid var(--line);border-radius:10px;background:var(--bg-soft)'>
+    <div class='mini' style='font-weight:700;color:var(--text);margin-bottom:4px'>${n}</div>
     <div class='mini' style='margin-bottom:2px'>Traditional: ${money(t)}</div>
     <div class='bar' style='margin-bottom:7px'><i style='width:${(t/max)*100}%;background:linear-gradient(90deg,#4a4a4a,#7a7a7a)'></i></div>
     <div class='mini' style='margin-bottom:2px'>CIC: ${money(c)}</div>
     <div class='bar'><i style='width:${(c/max)*100}%'></i></div>
   </div>`).join('');
+
 
   const driverMax=Math.max(B13-F13,F14,F15,1);
   $('comDrivers').innerHTML=`
@@ -395,6 +426,15 @@ function revForCom(){
 }
 
 document.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{revCalc();comCalc();}));
+
+const themeBtn = $('themeToggle');
+themeBtn.onclick = () => {
+  const isLight = document.body.classList.toggle('light');
+  themeBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+  revCalc();
+  comCalc();
+};
+
 revCalc();
 comCalc();
 </script>

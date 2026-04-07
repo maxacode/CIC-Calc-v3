@@ -23,20 +23,10 @@ jobs:
         with:
           ref: main
 
-      - name: Build static artifact with both variants
+      - name: Build static artifact
         run: |
           mkdir -p _site
-          cp -r main _site/main
-          cp -r dev _site/dev
-          cat > _site/index.html <<'HTML'
-          <!doctype html><html><body style="font-family:Inter,Arial;padding:40px">
-          <h2>CIC Calc v3 Deployments</h2>
-          <ul>
-            <li><a href="./main/">Main deployment</a></li>
-            <li><a href="./dev/">Dev deployment</a></li>
-          </ul>
-          </body></html>
-          HTML
+          cp -r main/* _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
