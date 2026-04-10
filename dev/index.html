@@ -223,6 +223,7 @@
 </div>
 <div style="max-width:1000px;margin:8px auto 14px;padding:0 10px;color:#9a9a9a;font-size:.75rem;text-align:center">Version v1.5.7 • CISO</div>
 
+<script src="../config.js"></script>
 <script>
 const $=id=>document.getElementById(id), money=n=>`$${Math.round(n).toLocaleString()}`;
 
@@ -269,16 +270,16 @@ function drawSimpleBars(canvasId, labels, values, color='#d9232e'){
 function revCalc(){
   const c6=+$('c6').value,d6=+$('d6').value,e6=+$('e6').value,f6=+$('f6').value,g6=+$('g6').value,h6=+$('h6').value,i6=+$('i6').value,j6=+$('j6').value;
   const salesPerAssociate=Math.max(0,j6||0);
-  const payments=[100,50,15,15,10,15,40], anq=[1,2,3,5,7,10,15];
+  const payments=CIC_CONFIG.revShare.tierPayments, anq=CIC_CONFIG.revShare.anqThresholds;
   const counts=[c6,d6,e6,f6,g6,h6,i6];
   const tierYear=[
-    c6*100*salesPerAssociate,
-    c6>=anq[1]?d6*50*salesPerAssociate:0,
-    c6>=anq[2]?e6*15*salesPerAssociate:0,
-    c6>=anq[3]?f6*15*salesPerAssociate:0,
-    c6>=anq[4]?g6*10*salesPerAssociate:0,
-    c6>=anq[5]?h6*15*salesPerAssociate:0,
-    c6>=anq[6]?i6*40*salesPerAssociate:0
+    counts[0]*payments[0]*salesPerAssociate,
+    c6>=anq[1]?counts[1]*payments[1]*salesPerAssociate:0,
+    c6>=anq[2]?counts[2]*payments[2]*salesPerAssociate:0,
+    c6>=anq[3]?counts[3]*payments[3]*salesPerAssociate:0,
+    c6>=anq[4]?counts[4]*payments[4]*salesPerAssociate:0,
+    c6>=anq[5]?counts[5]*payments[5]*salesPerAssociate:0,
+    c6>=anq[6]?counts[6]*payments[6]*salesPerAssociate:0
   ];
 
   const totalAssoc=counts.reduce((a,b)=>a+b,0);
@@ -334,7 +335,7 @@ function comCalc(){
   const B12=(h7*12)+i7+(j7*12);
   const B13=B10+B11+B12;
 
-  const F11=0,F12=1443,F13=F11+F12;
+  const F11=0,F12=CIC_CONFIG.commission.cicAnnualFee,F13=F11+F12;
   const B14=c7*l7,F14=c7*l7,F15=revForCom();
   const more=Math.round((B13-F13)+F14+F15);
 
@@ -384,17 +385,28 @@ function comCalc(){
 function revForCom(){
   const c6=+$('c6').value,d6=+$('d6').value,e6=+$('e6').value,f6=+$('f6').value,g6=+$('g6').value,h6=+$('h6').value,i6=+$('i6').value,j6=+$('j6').value;
   const salesPerAssociate=Math.max(0,j6||0);
-  const anq=[1,2,3,5,7,10,15];
-  return (c6*100+
-    (c6>=anq[1]?d6*50:0)+
-    (c6>=anq[2]?e6*15:0)+
-    (c6>=anq[3]?f6*15:0)+
-    (c6>=anq[4]?g6*10:0)+
-    (c6>=anq[5]?h6*15:0)+
-    (c6>=anq[6]?i6*40:0))*salesPerAssociate;
+  const p=CIC_CONFIG.revShare.tierPayments, anq=CIC_CONFIG.revShare.anqThresholds;
+  return (c6*p[0]+
+    (c6>=anq[1]?d6*p[1]:0)+
+    (c6>=anq[2]?e6*p[2]:0)+
+    (c6>=anq[3]?f6*p[3]:0)+
+    (c6>=anq[4]?g6*p[4]:0)+
+    (c6>=anq[5]?h6*p[5]:0)+
+    (c6>=anq[6]?i6*p[6]:0))*salesPerAssociate;
+}
+
+function applyDefaults(){
+  const D=CIC_CONFIG.defaults;
+  $('c6').value=D.tier1; $('d6').value=D.tier2; $('e6').value=D.tier3; $('f6').value=D.tier4;
+  $('g6').value=D.tier5; $('h6').value=D.tier6; $('i6').value=D.tier7; $('j6').value=D.salesPerYear;
+  $('b7').value=D.totalVolume; $('c7').value=D.transactionCount; $('d7').value=D.avgSalePrice;
+  $('e7').value=D.avgCommission; $('f7').value=D.commissionSplit; $('g7').value=D.transactionFee;
+  $('h7').value=D.monthlyFee; $('i7').value=D.annualFee; $('j7').value=D.otherRecurring;
+  $('k7').value=D.otherTransactionFee; $('l7').value=D.markupOnTransactionFee;
 }
 
 document.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{revCalc();comCalc();}));
+applyDefaults();
 revCalc();
 comCalc();
 </script>
