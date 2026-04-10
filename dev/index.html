@@ -258,6 +258,20 @@
 <script>
 const $=id=>document.getElementById(id), money=n=>`$${Math.round(n).toLocaleString()}`;
 
+function evalF(expr, vars) {
+  try {
+    const result = new Function(...Object.keys(vars), `return (${expr})`)(...Object.values(vars));
+    if (typeof result !== 'number' || !isFinite(result)) {
+      console.warn(`CIC config formula error: "${expr}" returned ${result} — using 0`);
+      return 0;
+    }
+    return result;
+  } catch(e) {
+    console.warn(`CIC config formula error: "${expr}" — ${e.message} — using 0`);
+    return 0;
+  }
+}
+
 const tabs=document.querySelectorAll('.tab');
 tabs.forEach(b=>b.onclick=()=>{
   tabs.forEach(x=>x.classList.remove('active'));
@@ -362,14 +376,15 @@ function revCalc(){
 function comCalc(){
   const b7=+$('b7').value,c7=+$('c7').value,d7=+$('d7').value,e7=+$('e7').value,f7=+$('f7').value,g7=+$('g7').value,h7=+$('h7').value,i7=+$('i7').value,j7=+$('j7').value,k7=+$('k7').value,l7=+$('l7').value;
 
-  const B10=d7*(e7/100)*(f7/100);
-  const B11=(c7*g7)+(c7*k7);
-  const B12=(h7*12)+i7+(j7*12);
+  const f=CIC_CONFIG.formulas;
+  const B10=evalF(f.brokerCommission,{d7,e7,f7});
+  const B11=evalF(f.transactionFees, {c7,g7,k7});
+  const B12=evalF(f.annualFees,      {h7,i7,j7});
   const B13=B10+B11+B12;
 
   const F11=CIC_CONFIG.commission.cicTransactionFee,F12=CIC_CONFIG.commission.cicAnnualFee,F13=F11+F12;
   const B14=c7*l7,F14=c7*l7,F15=revForCom();
-  const more=Math.round((B13-F13)+F14+F15);
+  const more=Math.round(evalF(f.netAdvantage,{B13,F13,F14,F15}));
 
   const rows=[
     ['Commission Paid to Broker',B10,0],

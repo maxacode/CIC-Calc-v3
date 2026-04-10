@@ -24,6 +24,17 @@ window.CIC_CONFIG = {
     cicTransactionFee: 0,
   },
 
+  // ── Commission Formulas ───────────────────────────────────────────────────
+  // These are evaluated at runtime. Variables are the input field IDs (b7–l7)
+  // plus intermediate results (B10, B11, B12, B13, F13, F14, F15).
+  // ⚠ Keep variable names exactly as shown — they must match what index.html passes in.
+  formulas: {
+    brokerCommission: 'd7 * (e7/100) * (f7/100)',   // Commission paid to broker
+    transactionFees:  '(c7*g7) + (c7*k7)',           // Total transaction fees
+    annualFees:       '(h7*12) + i7 + (j7*12)',      // Monthly+annual fees annualized
+    netAdvantage:     '(B13 - F13) + F14 + F15',     // CIC net advantage
+  },
+
   // ── Default Input Values ──────────────────────────────────────────────────
   // These pre-fill the calculator fields on page load.
   defaults: {
