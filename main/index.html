@@ -299,16 +299,16 @@ function drawSimpleBars(canvasId, labels, values, color='#d9232e'){
 function revCalc(){
   const c6=+$('c6').value,d6=+$('d6').value,e6=+$('e6').value,f6=+$('f6').value,g6=+$('g6').value,h6=+$('h6').value,i6=+$('i6').value,j6=+$('j6').value;
   const salesPerAssociate=Math.max(0,j6||0);
-  const payments=[100,50,15,15,10,15,40], anq=[1,2,3,5,7,10,15];
+  const payments=[100,50,25,25,20,25,50], anq=[1,2,3,5,7,10,15];
   const counts=[c6,d6,e6,f6,g6,h6,i6];
   const tierYear=[
     c6*100*salesPerAssociate,
     c6>=anq[1]?d6*50*salesPerAssociate:0,
-    c6>=anq[2]?e6*15*salesPerAssociate:0,
-    c6>=anq[3]?f6*15*salesPerAssociate:0,
-    c6>=anq[4]?g6*10*salesPerAssociate:0,
-    c6>=anq[5]?h6*15*salesPerAssociate:0,
-    c6>=anq[6]?i6*40*salesPerAssociate:0
+    c6>=anq[2]?e6*25*salesPerAssociate:0,
+    c6>=anq[3]?f6*25*salesPerAssociate:0,
+    c6>=anq[4]?g6*20*salesPerAssociate:0,
+    c6>=anq[5]?h6*25*salesPerAssociate:0,
+    c6>=anq[6]?i6*50*salesPerAssociate:0
   ];
 
   const totalAssoc=counts.reduce((a,b)=>a+b,0);
@@ -418,11 +418,11 @@ function revForCom(){
   const anq=[1,2,3,5,7,10,15];
   return (c6*100+
     (c6>=anq[1]?d6*50:0)+
-    (c6>=anq[2]?e6*15:0)+
-    (c6>=anq[3]?f6*15:0)+
-    (c6>=anq[4]?g6*10:0)+
-    (c6>=anq[5]?h6*15:0)+
-    (c6>=anq[6]?i6*40:0))*salesPerAssociate;
+    (c6>=anq[2]?e6*25:0)+
+    (c6>=anq[3]?f6*25:0)+
+    (c6>=anq[4]?g6*20:0)+
+    (c6>=anq[5]?h6*25:0)+
+    (c6>=anq[6]?i6*50:0))*salesPerAssociate;
 }
 
 document.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{revCalc();comCalc();}));
