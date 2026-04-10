@@ -19,6 +19,9 @@ window.CIC_CONFIG = {
   commission: {
     // CIC annual membership fee ($) used in the Traditional vs CIC comparison
     cicAnnualFee: 1443,
+
+    // CIC transaction fee per deal ($). CIC charges $0 — change this if that ever shifts.
+    cicTransactionFee: 0,
   },
 
   // ── Default Input Values ──────────────────────────────────────────────────

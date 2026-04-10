@@ -18,6 +18,7 @@
       --good:#20c997;
       --bad:#ff5b6e;
       --radius:12px;
+      --section-bg:#0d0d0d;
     }
     body.light {
       --bg: #fbfbfd;
@@ -26,6 +27,7 @@
       --line: #e5e5e7;
       --text: #1d1d1f;
       --muted: #6e6e73;
+      --section-bg: #eaeaed;
       background: #fbfbfd;
     }
     body.light .head { background: #ffffff; border: 2px solid var(--line); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
@@ -64,7 +66,7 @@
     .panel{display:none}
     .panel.active{display:block}
 
-    .grid{display:grid;grid-template-columns:1fr;gap:8px}
+    .grid{display:grid;grid-template-columns:1fr;gap:8px;background:var(--section-bg);border-radius:16px;border:2px solid var(--line);padding:8px}
     .card{background:linear-gradient(180deg,#171717,#111111);border: 2px solid var(--line);border-radius:var(--radius);padding:10px}
     .card h3{margin:0 0 8px;font-size:1rem;color:#f2f2f2;letter-spacing:.2px}
 
@@ -365,7 +367,7 @@ function comCalc(){
   const B12=(h7*12)+i7+(j7*12);
   const B13=B10+B11+B12;
 
-  const F11=0,F12=CIC_CONFIG.commission.cicAnnualFee,F13=F11+F12;
+  const F11=CIC_CONFIG.commission.cicTransactionFee,F12=CIC_CONFIG.commission.cicAnnualFee,F13=F11+F12;
   const B14=c7*l7,F14=c7*l7,F15=revForCom();
   const more=Math.round((B13-F13)+F14+F15);
 
