@@ -7,12 +7,14 @@ window.CIC_CONFIG = {
 
   // ── Revenue Share ────────────────────────────────────────────────────────
   revShare: {
-    // Dollar amount paid per sale at each tier (Tier 1 through Tier 7)
-    tierPayments: [100, 50, 25, 25, 20, 25, 50],
-
-    // Minimum number of personally-sponsored (Tier 1) associates required
-    // to unlock each tier's revenue share
-    anqThresholds: [1, 2, 3, 5, 7, 10, 15],
+    us: {
+      tierPayments: [100, 50, 25, 25, 20, 25, 50],
+      anqThresholds: [1, 2, 3, 5, 7, 10, 15],
+    },
+    ca: {
+      tierPayments: [140, 70, 35, 35, 28, 35, 70],
+      anqThresholds: [1, 2, 3, 5, 7, 10, 15],
+    },
   },
 
   // ── Commission Comparison ─────────────────────────────────────────────────
@@ -38,7 +40,7 @@ window.CIC_CONFIG = {
   // ── Default Input Values ──────────────────────────────────────────────────
   // These pre-fill the calculator fields on page load.
   defaults: {
-    // Revenue Share tab
+    // US Revenue Share tab
     tier1:       5,       // Personally Sponsored (Tier 1)
     tier2:       20,      // Tier 2 Associates
     tier3:       30,      // Tier 3 Associates
@@ -47,6 +49,16 @@ window.CIC_CONFIG = {
     tier6:       60,      // Tier 6 Associates
     tier7:       100,     // Tier 7 Associates
     salesPerYear: 6,      // No. of sales per Associate per Year
+
+    // CA Revenue Share tab
+    caTier1:       5,
+    caTier2:       20,
+    caTier3:       30,
+    caTier4:       40,
+    caTier5:       50,
+    caTier6:       60,
+    caTier7:       100,
+    caSalesPerYear: 6,
 
     // Commission tab
     totalVolume:           5200000,  // Total Volume ($)
