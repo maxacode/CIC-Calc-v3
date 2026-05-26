@@ -51,17 +51,23 @@
     body{margin:0;background:radial-gradient(circle at top right,#1f1f1f 0%,#0a0a0a 45%,#050505 100%);color:var(--text);transition: background 0.3s, color 0.3s;}
     .wrap{max-width:1000px;margin:0 auto;padding:10px}
 
-    .head{background:linear-gradient(140deg,#1a1a1a,#0f0f0f);border:2px solid #2a2a2a;border-radius:16px;padding:14px;position:relative}
-    .brand{display:flex;align-items:center;justify-content:center;gap:10px}
-    #themeToggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--bg-soft);border: 2px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;}
+    .head{background:linear-gradient(140deg,#1a1a1a,#0f0f0f);border:2px solid #2a2a2a;border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px}
+    #themeToggle{background:var(--bg-soft);border:2px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;transition:all 0.2s;flex-shrink:0;white-space:nowrap}
     #themeToggle:hover{border-color:var(--red);background:var(--bg)}
-    .dot{display:none}
-    h1{margin:0;font-size:2rem;letter-spacing:.8px;text-transform:uppercase;text-align:center}
-    .sub{display:none}
+    h1{margin:0;font-size:1.5rem;letter-spacing:.8px;text-transform:uppercase;flex-shrink:0}
 
-    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+    .tabs{display:flex;gap:8px;margin:0;align-items:stretch;justify-content:center;flex:1}
     .tab{border:2px solid #353535;background:#121212;color:var(--text);padding:10px;border-radius:10px;cursor:pointer;font-weight:600;font-size:.95rem}
     .tab.active{background:var(--red);border-color:var(--red);color:var(--white)}
+    .tab-group{display:flex;align-items:stretch;border:2px solid #353535;background:#121212;border-radius:10px;overflow:hidden}
+    .tab-group-label{display:flex;align-items:center;padding:0 10px 0 14px;font-weight:700;font-size:.82rem;color:var(--muted);white-space:nowrap;border-right:1px solid #353535;letter-spacing:.3px}
+    .tab-group .tab{border:none;border-radius:0;background:transparent;padding:10px 14px}
+    .tab-group .tab:not(.active):hover{background:rgba(255,255,255,0.06)}
+    .tab-group .tab.active{background:var(--red);color:var(--white)}
+    body.light .tab-group{background:#f5f5f7;border-color:var(--line)}
+    body.light .tab-group-label{border-right-color:var(--line)}
+    body.light .tab-group .tab{background:transparent;border:none;color:var(--text)}
+    body.light .tab-group .tab.active{background:var(--red);color:#fff}
 
     .panel{display:none}
     .panel.active{display:block}
@@ -109,7 +115,7 @@
 
 
     @media (min-width:1024px) and (hover:hover) and (pointer:fine){
-      h1{font-size:2.6rem}
+      h1{font-size:1.6rem}
       .tab{font-size:1.05rem;padding:12px}
       .card h3{font-size:1.15rem}
       label{font-size:1rem}
@@ -135,23 +141,26 @@
       .inputs{grid-template-columns:repeat(3,1fr)}
       .kpi-grid{grid-template-columns:repeat(4,1fr)}
       .split{grid-template-columns:1fr 1fr}
-      h1{font-size:1.22rem}
+      h1{font-size:1.4rem}
     }
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="head">
-    <div class="brand"><h1>CIC CALC</h1></div>
+    <h1>CIC CALC</h1>
+    <div class="tabs">
+      <div class="tab-group">
+        <span class="tab-group-label">Revenue Share:</span>
+        <button class="tab active" data-tab="rev-us">US</button>
+        <button class="tab" data-tab="rev-ca">CA</button>
+      </div>
+      <button class="tab" data-tab="com">Commission</button>
+    </div>
     <button id="themeToggle">Light Mode</button>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="rev">Revenue Share</button>
-    <button class="tab" data-tab="com">Commission</button>
-  </div>
-
-  <section id="rev" class="panel active">
+  <section id="rev-us" class="panel active">
     <div class="grid">
       <div class="card span-12">
         <h3>Team Inputs</h3>
@@ -199,6 +208,59 @@
             <div class="donut-center">Earned Share<b id="donutPct">0%</b></div>
           </div>
           <div id="revBreakdown" class="chart-wrap"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rev-ca" class="panel">
+    <div class="grid">
+      <div class="card span-12">
+        <h3>Team Inputs</h3>
+        <div class="inputs">
+          <div><label>Personally Sponsored (Tier 1)</label><input id="c6_ca" type="number" value="5"></div>
+          <div><label>Tier 2 Associates</label><input id="d6_ca" type="number" value="20"></div>
+          <div><label>Tier 3 Associates</label><input id="e6_ca" type="number" value="30"></div>
+          <div><label>Tier 4 Associates</label><input id="f6_ca" type="number" value="40"></div>
+          <div><label>Tier 5 Associates</label><input id="g6_ca" type="number" value="50"></div>
+          <div><label>Tier 6 Associates</label><input id="h6_ca" type="number" value="60"></div>
+          <div><label>Tier 7 Associates</label><input id="i6_ca" type="number" value="100"></div>
+          <div class="wide"><label>No. of sales per Associate per Year</label><input id="j6_ca" type="number" value="6"></div>
+        </div>
+      </div>
+
+      <div class="card span-12">
+        <h3>Revenue Share Snapshot</h3>
+        <div class="kpi-grid">
+          <div class="kpi-box"><div class="kpi" id="r_total_assoc_ca">0</div><div class="klabel">Total Associates</div></div>
+          <div class="kpi-box"><div class="kpi" id="r_rev_year_ca">$0</div><div class="klabel">Revenue / Year</div></div>
+          <div class="kpi-box"><div class="kpi" id="r_potential_ca">$0</div><div class="klabel">Potential Revenue Share</div></div>
+          <div class="kpi-box"><div class="kpi" id="r_missed_ca">$0</div><div class="klabel">Total Missed</div></div>
+        </div>
+      </div>
+
+      <div class="card span-6">
+        <h3>Tier Qualification & Payout</h3>
+        <table>
+          <thead><tr><th>Lvl</th><th>Payment</th><th>ANQ*</th><th>Status</th></tr></thead>
+          <tbody id="levels_ca"></tbody>
+        </table>
+      </div>
+
+      <div class="card span-6">
+        <h3>Chart: Qualified Revenue by Tier</h3>
+        <div id="bars_ca" class="chart-wrap"></div>
+        <canvas id="revChart_ca" width="800" height="250" style="width:100%;height:190px;background:#0d0d0d;border:2px solid #2b2b2b;border-radius:10px"></canvas>
+      </div>
+
+      <div class="card span-12">
+        <h3>Chart: Earned vs Missed Opportunity</h3>
+        <div class="split">
+          <div class="donut-wrap">
+            <div class="donut" id="revDonut_ca"></div>
+            <div class="donut-center">Earned Share<b id="donutPct_ca">0%</b></div>
+          </div>
+          <div id="revBreakdown_ca" class="chart-wrap"></div>
         </div>
       </div>
     </div>
@@ -272,12 +334,16 @@ function evalF(expr, vars) {
   }
 }
 
+let activeRevTab='us';
 const tabs=document.querySelectorAll('.tab');
 tabs.forEach(b=>b.onclick=()=>{
   tabs.forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
   b.classList.add('active');
   $(b.dataset.tab).classList.add('active');
+  if(b.dataset.tab==='rev-us'){ activeRevTab='us'; revCalc(''); }
+  else if(b.dataset.tab==='rev-ca'){ activeRevTab='ca'; revCalc('_ca'); }
+  else if(b.dataset.tab==='com'){ comCalc(); }
 });
 
 
@@ -313,10 +379,12 @@ function drawSimpleBars(canvasId, labels, values, color='#d9232e'){
   });
 }
 
-function revCalc(){
-  const c6=+$('c6').value,d6=+$('d6').value,e6=+$('e6').value,f6=+$('f6').value,g6=+$('g6').value,h6=+$('h6').value,i6=+$('i6').value,j6=+$('j6').value;
+function revCalc(sfx){
+  const s=sfx||'';
+  const cfg=s==='_ca'?CIC_CONFIG.revShare.ca:CIC_CONFIG.revShare.us;
+  const c6=+$('c6'+s).value,d6=+$('d6'+s).value,e6=+$('e6'+s).value,f6=+$('f6'+s).value,g6=+$('g6'+s).value,h6=+$('h6'+s).value,i6=+$('i6'+s).value,j6=+$('j6'+s).value;
   const salesPerAssociate=Math.max(0,j6||0);
-  const payments=CIC_CONFIG.revShare.tierPayments, anq=CIC_CONFIG.revShare.anqThresholds;
+  const payments=cfg.tierPayments, anq=cfg.anqThresholds;
   const counts=[c6,d6,e6,f6,g6,h6,i6];
   const tierYear=[
     counts[0]*payments[0]*salesPerAssociate,
@@ -333,12 +401,12 @@ function revCalc(){
   const potential=counts.map((n,i)=>n*payments[i]*salesPerAssociate).reduce((a,b)=>a+b,0);
   const missed=potential-revYear;
 
-  $('r_total_assoc').textContent=totalAssoc;
-  $('r_rev_year').textContent=money(revYear);
-  $('r_potential').textContent=money(potential);
-  $('r_missed').textContent=money(missed);
+  $('r_total_assoc'+s).textContent=totalAssoc;
+  $('r_rev_year'+s).textContent=money(revYear);
+  $('r_potential'+s).textContent=money(potential);
+  $('r_missed'+s).textContent=money(missed);
 
-  $('levels').innerHTML=payments.map((p,i)=>{
+  $('levels'+s).innerHTML=payments.map((p,i)=>{
     const qualified=(i===0||c6>=anq[i]);
     return `<tr>
       <td>${i+1}</td>
@@ -349,18 +417,18 @@ function revCalc(){
   }).join('');
 
   const max=Math.max(...tierYear,1);
-  $('bars').innerHTML=tierYear.map((v,i)=>`<div>
+  $('bars'+s).innerHTML=tierYear.map((v,i)=>`<div>
     <div class='mini'>Tier ${i+1}: ${money(v)}</div>
     <div class='bar'><i style='width:${(v/max)*100}%'></i></div>
   </div>`).join('');
-  drawSimpleBars('revChart',['T1','T2','T3','T4','T5','T6','T7'],tierYear,'#d9232e');
+  drawSimpleBars('revChart'+s,['T1','T2','T3','T4','T5','T6','T7'],tierYear,'#d9232e');
 
   const earnedPct=potential>0?Math.max(0,Math.min(100,(revYear/potential)*100)):0;
-  $('revDonut').style.setProperty('--deg',`${earnedPct*3.6}deg`);
-  $('donutPct').textContent=`${Math.round(earnedPct)}%`;
+  $('revDonut'+s).style.setProperty('--deg',`${earnedPct*3.6}deg`);
+  $('donutPct'+s).textContent=`${Math.round(earnedPct)}%`;
 
   const missMax=Math.max(revYear,missed,1);
-  $('revBreakdown').innerHTML=`
+  $('revBreakdown'+s).innerHTML=`
     <div>
       <div class='mini'>Earned Revenue Share: ${money(revYear)}</div>
       <div class='bar'><i style='width:${(revYear/missMax)*100}%;background:linear-gradient(90deg,#c8102e,#ff2d55)'></i></div>
@@ -431,9 +499,11 @@ function comCalc(){
 }
 
 function revForCom(){
-  const c6=+$('c6').value,d6=+$('d6').value,e6=+$('e6').value,f6=+$('f6').value,g6=+$('g6').value,h6=+$('h6').value,i6=+$('i6').value,j6=+$('j6').value;
+  const s=activeRevTab==='ca'?'_ca':'';
+  const cfg=activeRevTab==='ca'?CIC_CONFIG.revShare.ca:CIC_CONFIG.revShare.us;
+  const c6=+$('c6'+s).value,d6=+$('d6'+s).value,e6=+$('e6'+s).value,f6=+$('f6'+s).value,g6=+$('g6'+s).value,h6=+$('h6'+s).value,i6=+$('i6'+s).value,j6=+$('j6'+s).value;
   const salesPerAssociate=Math.max(0,j6||0);
-  const p=CIC_CONFIG.revShare.tierPayments, anq=CIC_CONFIG.revShare.anqThresholds;
+  const p=cfg.tierPayments, anq=cfg.anqThresholds;
   return (c6*p[0]+
     (c6>=anq[1]?d6*p[1]:0)+
     (c6>=anq[2]?e6*p[2]:0)+
@@ -447,24 +517,28 @@ function applyDefaults(){
   const D=CIC_CONFIG.defaults;
   $('c6').value=D.tier1; $('d6').value=D.tier2; $('e6').value=D.tier3; $('f6').value=D.tier4;
   $('g6').value=D.tier5; $('h6').value=D.tier6; $('i6').value=D.tier7; $('j6').value=D.salesPerYear;
+  $('c6_ca').value=D.caTier1||D.tier1; $('d6_ca').value=D.caTier2||D.tier2; $('e6_ca').value=D.caTier3||D.tier3; $('f6_ca').value=D.caTier4||D.tier4;
+  $('g6_ca').value=D.caTier5||D.tier5; $('h6_ca').value=D.caTier6||D.tier6; $('i6_ca').value=D.caTier7||D.tier7; $('j6_ca').value=D.caSalesPerYear||D.salesPerYear;
   $('b7').value=D.totalVolume; $('c7').value=D.transactionCount; $('d7').value=D.avgSalePrice;
   $('e7').value=D.avgCommission; $('f7').value=D.commissionSplit; $('g7').value=D.transactionFee;
   $('h7').value=D.monthlyFee; $('i7').value=D.annualFee; $('j7').value=D.otherRecurring;
   $('k7').value=D.otherTransactionFee; $('l7').value=D.markupOnTransactionFee;
 }
 
-document.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{revCalc();comCalc();}));
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{revCalc('');revCalc('_ca');comCalc();}));
 
 const themeBtn = $('themeToggle');
 themeBtn.onclick = () => {
   const isLight = document.body.classList.toggle('light');
   themeBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
-  revCalc();
+  revCalc('');
+  revCalc('_ca');
   comCalc();
 };
 
 applyDefaults();
-revCalc();
+revCalc('');
+revCalc('_ca');
 comCalc();
 </script>
 </body>
